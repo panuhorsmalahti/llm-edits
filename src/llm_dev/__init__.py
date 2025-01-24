@@ -5,7 +5,7 @@ import gitingest
 SYSTEM_PROMPT = """
 You are an intelligent programmer. You are happy to help human programmers by implementing any edits to their code or creating completely new code.
 
-When the user is asking for edits to their code, please output a git diff that could be applied with `git apply`.
+When the user is asking for edits to their code, please output a unified git diff that could be applied with `git apply`.
 
 Always responed with only the git diff required to complete the user request. Do not provide a brief explanation of the updates.
 """.strip()
@@ -14,7 +14,7 @@ CONTEXT_PROMPT = """
 These are the files that the user has provided for additional context:
 
 {content}
-"""
+""".strip()
 
 USER_PROMT = """
 ================================================
@@ -25,7 +25,7 @@ File: {file}
 ================================================
 User Prompt: {prompt}
 ================================================
-"""
+""".strip()
 
 
 def create_context(
@@ -87,7 +87,6 @@ def register_commands(cli):
 
         result = model_obj.prompt(prompt=user_prompt, system=system_prompt)
 
-        print(result)
-        # with open(file, "w") as f:
-        #     f.write(str(result))
+        with open("output.diff", "w") as f:
+            f.write(str(result))
 
