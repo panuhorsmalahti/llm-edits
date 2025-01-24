@@ -1,14 +1,26 @@
 import click
-import git
 import gitingest
 import llm
+
+from .xml_parser import apply_modifications
 
 SYSTEM_PROMPT = """
 You are an intelligent programmer. You are happy to help human programmers by implementing any edits to their code or creating completely new code.
 
-When the user is asking for edits to their code, please output a unified git diff that could be applied with `git apply`.
+When the user is asking for edits to their code, please output the changes you make in this XML format:
 
-Always responed with only the git diff required to complete the user request. Do not provide a brief explanation of the updates.
+<mod path={file}>
+<old>
+{old_code>
+</old>
+<new>
+{new_code>
+</new>
+</mod>
+
+If necessary, you can respond with multiple mod blocks to define multiple changes, but all mod blocks must contain both old and new blocks.
+
+Always respond with only the mod blocks required to complete the user request. Do not provide any other information.
 """.strip()
 
 CONTEXT_PROMPT = """
@@ -86,7 +98,7 @@ def register_commands(cli):
 
         user_prompt = USER_PROMT.format(file=file, content=content, prompt=prompt)
 
-        result = model_obj.prompt(prompt=user_prompt, system=system_prompt)
+        generation = model_obj.prompt(prompt=user_prompt, system=system_prompt)
+        print(generation)
 
-        git.Repo(".").git.apply(result)
-
+        apply_modifications(generation.text())
