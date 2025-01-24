@@ -1,6 +1,7 @@
-import llm
 import click
+import git
 import gitingest
+import llm
 
 SYSTEM_PROMPT = """
 You are an intelligent programmer. You are happy to help human programmers by implementing any edits to their code or creating completely new code.
@@ -47,7 +48,7 @@ def create_context(
 @llm.hookimpl
 def register_commands(cli):
     @cli.command()
-    @click.argument("file", type=click.Path())
+    @click.argument("file", type=click.Path(exists=True))
     @click.argument("prompt")
     @click.option("-m", "--model", default=None, help="Specify the model to use.")
     @click.option(
@@ -87,6 +88,5 @@ def register_commands(cli):
 
         result = model_obj.prompt(prompt=user_prompt, system=system_prompt)
 
-        with open("output.diff", "w") as f:
-            f.write(str(result))
+        git.Repo(".").git.apply(result)
 
