@@ -1,7 +1,7 @@
 [project]
 name = "llm-edit"
 version = "0.1.0"
-description = "Add your description here"
+description = "Use LLMs to generate and edit files in your shell"
 readme = "README.md"
 authors = [{ name = "ajac-zero", email = "ajcardoza2000@gmail.com" }]
 license = { text = "Apache-2.0" }
