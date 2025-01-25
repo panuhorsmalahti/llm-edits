@@ -1,0 +1,3 @@
+These are the files that the user has provided for additional context:
+
+{content}

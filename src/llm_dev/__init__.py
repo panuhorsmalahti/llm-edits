@@ -3,42 +3,7 @@ import gitingest
 import llm
 
 from .xml_parser import apply_modifications
-
-SYSTEM_PROMPT = """
-You are an intelligent programmer. You are happy to help human programmers by implementing any edits to their code or creating completely new code.
-
-When the user is asking for edits to their code, please output the changes you make in this XML format:
-
-<mod path={file}>
-<old>
-{old_code>
-</old>
-<new>
-{new_code>
-</new>
-</mod>
-
-If necessary, you can respond with multiple mod blocks to define multiple changes, but all mod blocks must contain both old and new blocks.
-
-Always respond with only the mod blocks required to complete the user request. Do not provide any other information.
-""".strip()
-
-CONTEXT_PROMPT = """
-These are the files that the user has provided for additional context:
-
-{content}
-""".strip()
-
-USER_PROMT = """
-================================================
-File: {file}
-================================================
-{content}
-
-================================================
-User Prompt: {prompt}
-================================================
-""".strip()
+from .prompts import SYSTEM_PROMPT, CONTEXT_PROMPT, USER_PROMT
 
 
 def create_context(
