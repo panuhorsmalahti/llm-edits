@@ -1,5 +1,5 @@
-import re
 import os
+import re
 
 
 def adjust_indentation(base_indent, content):

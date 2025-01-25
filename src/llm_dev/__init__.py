@@ -3,8 +3,8 @@ import gitingest
 import llm
 from llm.cli import get_default_model
 
+from .prompts import CONTEXT_PROMPT, SYSTEM_PROMPT, USER_PROMPT
 from .xml_parser import apply_modifications
-from .prompts import SYSTEM_PROMPT, CONTEXT_PROMPT, USER_PROMPT
 
 
 @llm.hookimpl
@@ -14,7 +14,8 @@ def register_commands(cli):
     @click.argument("prompt")
     @click.option("-m", "--model", default=None, help="Specify the model to use.")
     @click.option("-d", "--context-dir", type=click.Path(exists=True))
-    def dev(file, prompt, context_dir, model):
+    @click.option("--dry-run", is_flag=True)
+    def dev(file, prompt, context_dir, model, dry_run):
         model_obj = llm.get_model(model or get_default_model())
 
         if model_obj.needs_key:
@@ -40,6 +41,8 @@ def register_commands(cli):
         user_prompt = USER_PROMPT.format(file=file, content=content, prompt=prompt)
 
         generation = model_obj.prompt(prompt=user_prompt, system=system_prompt)
-        print(generation.text())
 
-        apply_modifications(generation.text())
+        if not dry_run:
+            apply_modifications(generation.text())
+        else:
+            print(generation.text())
