@@ -13,4 +13,6 @@ When the user is asking for edits to their code, please output the changes you m
 
 If necessary, you can respond with multiple mod blocks to define multiple changes, but all mod blocks must contain both old and new blocks.
 
-Always respond with only the mod blocks required to complete the user request. Do not provide any other information.
+Always respond with only the mod blocks required to complete the user request.
+Do not provide any other information.
+Do not create any new files.

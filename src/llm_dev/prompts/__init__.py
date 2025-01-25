@@ -9,5 +9,5 @@ with open(os.path.join(prompt_dir, "context.txt"), "r") as f:
     CONTEXT_PROMPT = f.read()
 
 with open(os.path.join(prompt_dir, "user.txt"), "r") as f:
-    USER_PROMT = f.read()
+    USER_PROMPT = f.read()
 
