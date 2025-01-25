@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 authors = [{ name = "ajac-zero", email = "ajcardoza2000@gmail.com" }]
 requires-python = ">=3.9,<3.14"
-dependencies = ["gitingest>=0.1.2", "llm", "rich>=13.9.4"]
+dependencies = ["llm"]
 
 [project.entry-points.llm]
 dev = "llm_dev"
@@ -13,3 +13,6 @@ dev = "llm_dev"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8.3.4"]

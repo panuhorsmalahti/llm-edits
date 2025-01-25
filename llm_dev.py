@@ -19,6 +19,13 @@ USER_TEMPLATE = """
 ```
 """.strip()
 
+CONTEXT_TEMPLATE = """
+{file}
+```
+{content}
+```
+"""
+
 
 @llm.hookimpl
 def register_commands(cli):
@@ -28,7 +35,10 @@ def register_commands(cli):
     @click.option("-m", "--model", default=None, help="Specify the model to use")
     @click.option("-s", "--system", help="Custom system prompt")
     @click.option("--key", help="API key to use")
-    def dev(file, args, model, system, key):
+    @click.option(
+        "-C", "--context", multiple=True, help="Paths to additional context files"
+    )
+    def dev(file, args, model, system, key, context):
         """Generate and rewrite files in your shell"""
         from llm.cli import get_default_model
 
@@ -37,7 +47,18 @@ def register_commands(cli):
                 pass
 
         with open(file, "r") as f:
-            prompt = USER_TEMPLATE.format(content=f.read(), prompt=" ".join(args))
+            content = f.read()
+            prompt = USER_TEMPLATE.format(content=content, prompt=" ".join(args))
+            if context:
+                for ctx_file in context:
+                    if os.path.exists(ctx_file):
+                        with open(ctx_file, "r") as cf:
+                            ctx_content = cf.read()
+                            prompt += "\n\n" + CONTEXT_TEMPLATE.format(
+                                file=ctx_file, content=ctx_content
+                            )
+                    else:
+                        print(f"Context file {ctx_file} not found. Skipping.")
 
         model_id = model or get_default_model()
         model_obj = llm.get_model(model_id)

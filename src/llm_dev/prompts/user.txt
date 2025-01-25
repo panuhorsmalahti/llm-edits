@@ -1,8 +1,0 @@
-<file path={file}>
-<content>
-{content}
-</content>
-<prompt>
-{prompt}
-</prompt>
-</file>
