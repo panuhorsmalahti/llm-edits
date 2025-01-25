@@ -2,6 +2,7 @@ import click
 import gitingest
 import llm
 from llm.cli import get_default_model
+from rich import print as rich_print
 
 from .prompts import CONTEXT_PROMPT, SYSTEM_PROMPT, USER_PROMPT
 from .xml_parser import apply_modifications
@@ -14,7 +15,13 @@ def register_commands(cli):
     @click.argument("prompt")
     @click.option("-m", "--model", default=None, help="Specify the model to use.")
     @click.option("-d", "--context-dir", type=click.Path(exists=True))
-    def dev(file, prompt, context_dir, model):
+    @click.option(
+        "-v",
+        "--verbose",
+        is_flag=True,
+        help="Print the generation output with rich formatting.",
+    )
+    def dev(file, prompt, context_dir, model, verbose):
         model_obj = llm.get_model(model or get_default_model())
 
         if model_obj.needs_key:
@@ -40,5 +47,8 @@ def register_commands(cli):
         user_prompt = USER_PROMPT.format(file=file, content=content, prompt=prompt)
 
         generation = model_obj.prompt(prompt=user_prompt, system=system_prompt)
+
+        if verbose:
+            rich_print(generation.text())
 
         apply_modifications(generation.text())
