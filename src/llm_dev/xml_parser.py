@@ -1,5 +1,8 @@
 import os
 import re
+from rich.console import Console
+
+console = Console()
 
 
 def adjust_indentation(base_indent, content):
@@ -36,10 +39,9 @@ def apply_modifications(input_string):
     )
 
     if not mods:
-        print(
+        raise ValueError(
             "[bold red]Error:[/bold red] No valid <mod> blocks found in the input string."
         )
-        return
 
     for file_path, old_code, new_code in mods:
         file_path = file_path.strip()
@@ -47,7 +49,9 @@ def apply_modifications(input_string):
         new_code = new_code.strip()
 
         if not os.path.exists(file_path):
-            print(f"[bold red]Error:[/bold red] File '{file_path}' does not exist.")
+            console.print(
+                f"[bold red]Error:[/bold red] File '{file_path}' does not exist."
+            )
             continue
 
         try:
@@ -82,7 +86,12 @@ def apply_modifications(input_string):
             with open(file_path, "w") as file:
                 file.write(updated_content)
 
-            print(f"Modifications applied successfully to '{file_path}'.")
+            console.print(
+                f"[bold green]Success:[/bold green] Modifications applied successfully to '{file_path}'."
+            )
 
         except Exception as e:
-            print(f"[bold red]Error:[/bold red] Processing '{file_path}': {e}")
+            raise ValueError(
+                f"[bold red]Error:[/bold red] Processing '{file_path}': {e}"
+            )
+

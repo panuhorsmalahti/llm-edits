@@ -14,8 +14,7 @@ def register_commands(cli):
     @click.argument("prompt")
     @click.option("-m", "--model", default=None, help="Specify the model to use.")
     @click.option("-d", "--context-dir", type=click.Path(exists=True))
-    @click.option("--dry-run", is_flag=True)
-    def dev(file, prompt, context_dir, model, dry_run):
+    def dev(file, prompt, context_dir, model):
         model_obj = llm.get_model(model or get_default_model())
 
         if model_obj.needs_key:
@@ -42,7 +41,4 @@ def register_commands(cli):
 
         generation = model_obj.prompt(prompt=user_prompt, system=system_prompt)
 
-        if not dry_run:
-            apply_modifications(generation.text())
-        else:
-            print(generation.text())
+        apply_modifications(generation.text())

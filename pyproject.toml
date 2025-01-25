@@ -7,9 +7,8 @@ authors = [{ name = "ajac-zero", email = "ajcardoza2000@gmail.com" }]
 requires-python = ">=3.9,<3.14"
 dependencies = [
   "gitingest>=0.1.2",
-  "gitpython>=3.1.44",
   "llm>=0.19.1",
-  "lxml>=5.3.0",
+  "rich>=13.9.4",
 ]
 
 [project.entry-points.llm]
