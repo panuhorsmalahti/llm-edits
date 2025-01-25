@@ -1,21 +1,21 @@
 import click
 import llm
+import os
 
 SYSTEM_PROMPT = """
 You are an expert programmer. You are happy to help users by implementing any edits to their code or creating completely new code.
 The user will provide you with a file, and you must rewrite it to fulfill the user's request.
 Do not provide any other information.
 Do not create any new files.
+Only respond with the rewritten file contents.
 """.strip()
 
 USER_TEMPLATE = """
-<file path={file}>
-{content}
-</file>
-
-<prompt>
 {prompt}
-</prompt>
+
+```
+{content}
+```
 """.strip()
 
 
@@ -32,9 +32,7 @@ def register_commands(cli):
         from llm.cli import get_default_model
 
         with open(file, "r") as f:
-            prompt = USER_TEMPLATE.format(
-                file=file, content=f.read(), prompt=" ".join(args)
-            )
+            prompt = USER_TEMPLATE.format(content=f.read(), prompt=" ".join(args))
 
         model_id = model or get_default_model()
         model_obj = llm.get_model(model_id)
