@@ -7,6 +7,7 @@ You are an expert programmer. You are happy to help users by implementing any ed
 The user will provide you with a file, and you must rewrite it to fulfill the user's request.
 Do not provide any other information.
 Do not create any new files.
+Do not use code blocks.
 Only respond with the rewritten file contents.
 """.strip()
 
@@ -31,6 +32,10 @@ def register_commands(cli):
         """Generate and rewrite files in your shell"""
         from llm.cli import get_default_model
 
+        if not os.path.exists(file):
+            with open(file, "w") as f:
+                pass
+
         with open(file, "r") as f:
             prompt = USER_TEMPLATE.format(content=f.read(), prompt=" ".join(args))
 
@@ -43,3 +48,4 @@ def register_commands(cli):
 
         with open(file, "w") as f:
             f.write(result.text())
+
