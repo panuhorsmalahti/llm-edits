@@ -1,6 +1,6 @@
 # LLM Edit
 
-[![PyPI](https://img.shields.io/pypi/v/llm-cmd.svg)](https://pypi.org/project/llm-edit/)
+[![PyPI](https://img.shields.io/pypi/v/llm-edit.svg)](https://pypi.org/project/llm-edit/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ajac-zero/llm-edit/blob/main/LICENSE)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
