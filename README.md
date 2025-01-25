@@ -4,12 +4,18 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ajac-zero/llm-edit/blob/main/LICENSE)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-![Demo](demo.gif)
-
 Use LLMs to generate and edit files in your shell
 
 This is a plugin for [llm](https://github.com/simonw/llm),
 a command line interface for both local and remote large language models.
+
+<p align="center">
+  <img src="demo.gif" alt="Demo">
+</p>
+
+<p align="center">
+  <em>Asking llama-3.1-8b to generate a new file to solve fizzbuzz</em>
+</p>
 
 ## Description
 
