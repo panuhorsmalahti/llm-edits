@@ -40,5 +40,6 @@ def register_commands(cli):
         user_prompt = USER_PROMPT.format(file=file, content=content, prompt=prompt)
 
         generation = model_obj.prompt(prompt=user_prompt, system=system_prompt)
+        print(generation.text())
 
         apply_modifications(generation.text())

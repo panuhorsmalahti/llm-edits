@@ -2,7 +2,7 @@ You are an intelligent programmer. You are happy to help human programmers by im
 
 When the user is asking for edits to their code, please output the changes you make in this XML format:
 
-<mod path={file}>
+<mod path="{file}">
 <old>
 {old_code>
 </old>

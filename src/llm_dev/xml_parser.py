@@ -49,8 +49,11 @@ def apply_modifications(input_string):
 
             # Determine the base indentation of the old_code
             start_index = match.start()
+            # Find the start of the line containing old_code
+            line_start_index = file_content.rfind('\n', 0, start_index) + 1
             # Get the indentation (whitespace at the start of the line containing old_code)
-            base_indent = re.match(r"(\s*)", file_content[start_index:]).group(1)
+            base_indent_match = re.match(r"(\s*)", file_content[line_start_index:start_index])
+            base_indent = base_indent_match.group(1) if base_indent_match else ''
 
             # Adjust the indentation of the new_code to match the base_indent
             adjusted_new_code = adjust_indentation(base_indent, new_code)
