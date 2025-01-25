@@ -38,7 +38,7 @@ def register_commands(cli):
     @click.option(
         "-C", "--context", multiple=True, help="Paths to additional context files"
     )
-    def dev(file, args, model, system, key, context):
+    def edit(file, args, model, system, key, context):
         """Generate and rewrite files in your shell"""
         from llm.cli import get_default_model
 
@@ -69,4 +69,3 @@ def register_commands(cli):
 
         with open(file, "w") as f:
             f.write(result.text())
-

@@ -1,5 +1,5 @@
 [project]
-name = "llm-dev"
+name = "llm-edit"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -13,7 +13,7 @@ dependencies = ["llm"]
 dev = ["pytest>=8.3.4"]
 
 [project.entry-points.llm]
-dev = "llm_dev"
+dev = "llm_edit"
 
 [project.urls]
 Homepage = "https://github.com/ajac-zero/llm-dev"
