@@ -1,6 +1,6 @@
 [project]
 name = "llm-edit"
-version = "0.1.0"
+version = "0.1.1"
 description = "Use LLMs to generate and edit files in your shell"
 readme = "README.md"
 authors = [{ name = "ajac-zero", email = "ajcardoza2000@gmail.com" }]
