@@ -1,6 +1,8 @@
-import click
-import llm
 import os
+
+import click
+import httpx
+import llm
 
 SYSTEM_PROMPT = """
 You are an expert programmer. You are happy to help users by implementing any edits to their code or creating completely new code.
@@ -36,7 +38,10 @@ def register_commands(cli):
     @click.option("-s", "--system", help="Custom system prompt")
     @click.option("--key", help="API key to use")
     @click.option(
-        "-C", "--context", multiple=True, help="Paths to additional context files"
+        "-C",
+        "--context",
+        multiple=True,
+        help="Paths or URLs to additional context files",
     )
     def edit(file, args, model, system, key, context):
         """Generate and rewrite files in your shell"""
@@ -50,15 +55,25 @@ def register_commands(cli):
             content = f.read()
             prompt = USER_TEMPLATE.format(content=content, prompt=" ".join(args))
             if context:
-                for ctx_file in context:
-                    if os.path.exists(ctx_file):
-                        with open(ctx_file, "r") as cf:
+                for ctx in context:
+                    if ctx.startswith(("http://", "https://")):
+                        try:
+                            response = httpx.get(ctx)
+                            response.raise_for_status()
+                            ctx_content = response.text
+                            prompt += "\n\n" + CONTEXT_TEMPLATE.format(
+                                file=ctx, content=ctx_content
+                            )
+                        except httpx.HTTPError as e:
+                            print(f"Failed to fetch URL {ctx}: {e}. Skipping.")
+                    elif os.path.exists(ctx):
+                        with open(ctx, "r") as cf:
                             ctx_content = cf.read()
                             prompt += "\n\n" + CONTEXT_TEMPLATE.format(
-                                file=ctx_file, content=ctx_content
+                                file=ctx, content=ctx_content
                             )
                     else:
-                        print(f"Context file {ctx_file} not found. Skipping.")
+                        print(f"Context file or URL {ctx} not found. Skipping.")
 
         model_id = model or get_default_model()
         model_obj = llm.get_model(model_id)
