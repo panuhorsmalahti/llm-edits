@@ -1,4 +1,4 @@
-from llm.plugins import pm, load_plugins
+from llm.plugins import load_plugins, pm
 
 
 def test_plugin_is_installed():
