@@ -1,9 +1,9 @@
 [project]
-name = "llm-edit"
-version = "0.1.1"
+name = "llm-edits"
+version = "0.1.0"
 description = "Use LLMs to generate and edit files in your shell"
 readme = "README.md"
-authors = [{ name = "ajac-zero", email = "ajcardoza2000@gmail.com" }]
+authors = [{ name = "panuhorsmalahti", email = "panu.horsmalahti@iki.fi" }]
 license = { text = "Apache-2.0" }
 classifiers = ["License :: OSI Approved :: Apache Software License"]
 requires-python = ">=3.9,<3.14"
@@ -13,10 +13,10 @@ dependencies = ["llm"]
 dev = ["pytest>=8.3.4"]
 
 [project.entry-points.llm]
-dev = "llm_edit"
+dev = "llm_edits"
 
 [project.urls]
-Homepage = "https://github.com/ajac-zero/llm-dev"
+Homepage = "https://github.com/panu-horsmalahti/llm-edits"
 
 [build-system]
 requires = ["hatchling"]
