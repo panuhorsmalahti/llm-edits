@@ -19,8 +19,11 @@ generate or modify the file on your behalf.
 # Install the tool
 llm install llm-edits
 
+# Create a repomix file
+npx repomix
+
 # Edit files
-cat repomix-output.txt | llm edits -s "create a program that solves fizzbuzz on an input number"
+echo "<your instructions to modify the repository>" | cat - repomix-output.txt |LLM_LOAD_PLUGINS='llm-edits' llm edits
 ```
 
 ## Help
